@@ -13,3 +13,7 @@ output "asg_name" {
 output "lb_arn" {
   value = aws_elastic_beanstalk_environment.beanstalkappenv.load_balancers[0]
 }
+
+output "url" {
+  value = "https://${var.domain_name}"
+}

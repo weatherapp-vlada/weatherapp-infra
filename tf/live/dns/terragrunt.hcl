@@ -8,5 +8,5 @@ include {
 
 inputs = {
   zone_name = "inviggde.com."
-  domain_name = "weather.inviggde.com"
+  domain_name = "api.inviggde.com"
 }
