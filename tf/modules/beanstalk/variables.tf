@@ -58,3 +58,19 @@ variable "db_name" {
 variable "rds_sg" {
   type = string
 }
+
+variable "cognito_issuer_uri" {
+  type = string
+}
+
+variable "cognito_client_id" {
+  type = string
+}
+
+variable "cognito_jwk_uri" {
+  type = string
+}
+
+variable "cognito_confirm_user_base_url" {
+  type = string
+}

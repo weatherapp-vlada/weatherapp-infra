@@ -1,3 +1,7 @@
+variable "region" {
+  type = string
+}
+
 variable "codebuild_project_name" {
   type = string
 }

@@ -35,6 +35,9 @@ resource "aws_amplify_app" "app" {
 
   environment_variables = {
     NEXT_PUBLIC_BACKEND_URL = var.backend_url
+    COGNITO_CLIENT_ID = var.cognito_client_id
+    COGNITO_CLIENT_SECRET = var.cognito_client_secret
+    COGNITO_ISSUER = var.cognito_issuer_uri
   }
 }
 

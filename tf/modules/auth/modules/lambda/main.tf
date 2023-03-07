@@ -14,14 +14,20 @@ resource "aws_iam_role" "lambda_role" {
 }
 
 resource "aws_lambda_function" "cognito_custom_message" {
-  # If the file is not in the current working directory you will need to include a
-  # path.module in the filename.
   function_name    = var.function_name
-  filename         = data.archive_file.lambda_zip.output_path
-  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+  filename         = "${path.module}/dummy.zip"
   role             = aws_iam_role.lambda_role.arn
   handler          = "index.handler"
-  runtime = "nodejs16.x"
+  runtime          = "nodejs16.x"
+
+    lifecycle {
+      # these will be changed by GitHub Action in Lambda's CI/CD pipeline
+      ignore_changes = [
+        filename,
+        source_code_hash
+      ]
+    }
+
 
   environment {
     variables = {

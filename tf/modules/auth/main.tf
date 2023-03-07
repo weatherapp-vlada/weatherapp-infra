@@ -13,4 +13,5 @@ module cognito {
   pool_name                 = var.pool_name
   custom_message_lambda_arn = module.lambda.arn
   user_pool_domain          = var.user_pool_domain
+  frontend_base_url         = var.frontend_base_url
 }

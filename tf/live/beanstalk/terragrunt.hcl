@@ -18,6 +18,10 @@ dependency "rds" {
   config_path = "../rds"
 }
 
+dependency "auth" {
+  config_path = "../auth"
+}
+
 inputs = {
   application_name = "weatherapp"
   vpc_id = dependency.vpc.outputs.vpc_id
@@ -33,4 +37,8 @@ inputs = {
   db_port = dependency.rds.outputs.port
   db_name = dependency.rds.outputs.db_name
   rds_sg = dependency.rds.outputs.sg
+  cognito_issuer_uri = dependency.auth.outputs.cognito_issuer_uri
+  cognito_client_id = dependency.auth.outputs.cognito_client_id
+  cognito_jwk_uri = dependency.auth.outputs.cognito_jwk_uri
+  cognito_confirm_user_base_url = dependency.auth.outputs.cognito_confirm_user_base_url
 }
