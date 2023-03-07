@@ -10,6 +10,7 @@ module code_build {
 module code_pipeline {
   source = "./modules/code_pipeline"
 
+  region                 = var.region
   name                   = var.codepipeline_name
   github_repo            = var.github_repo
   github_connection_arn  = var.github_connection_arn

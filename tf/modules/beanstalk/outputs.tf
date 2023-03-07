@@ -15,5 +15,5 @@ output "lb_arn" {
 }
 
 output "url" {
-  value = "https://${var.domain_name}"
+  value = "https://${aws_route53_record.myapp.fqdn}"
 }
