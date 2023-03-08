@@ -400,7 +400,11 @@
                 "amplify:GetApp",
                 "amplify:GetBranch",
                 "amplify:UpdateApp",
-                "amplify:UpdateBranch"
+                "amplify:UpdateBranch",
+                "logs:CreateLogStream",
+                "logs:CreateLogGroup",
+                "logs:DescribeLogGroups",
+                "logs:PutLogEvents"
             ],
             "Resource": "*"
         }
