@@ -7,6 +7,8 @@ frontend:
         - npm install
     build:
       commands:
+        - env | grep -e COGNITO_CLIENT_ID -e COGNITO_CLIENT_SECRET -e COGNITO_ISSUER -e NEXTAUTH_SECRET -e NEXTAUTH_URL >> .env.production
+        - env | grep -e NEXT_PUBLIC_ >> .env.production
         - npm run build
   artifacts:
     baseDirectory: .next

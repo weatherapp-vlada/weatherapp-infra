@@ -38,6 +38,8 @@ resource "aws_amplify_app" "app" {
     COGNITO_CLIENT_ID = var.cognito_client_id
     COGNITO_CLIENT_SECRET = var.cognito_client_secret
     COGNITO_ISSUER = var.cognito_issuer_uri
+    NEXTAUTH_SECRET = local.secrets.nextauth_secret
+    NEXTAUTH_URL = "https://${var.domain_name}"
   }
 }
 

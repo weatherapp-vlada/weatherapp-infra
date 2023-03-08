@@ -40,3 +40,7 @@ variable "domain_name" {
 variable "branch_name" {
   type = string
 }
+
+variable "secrets" {
+  type = string
+}
