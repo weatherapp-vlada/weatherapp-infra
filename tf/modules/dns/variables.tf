@@ -1,8 +1,3 @@
-variable "region" {
-  type = string
-  default = "eu-central-1"
-}
-
 variable "zone_name" {
   type = string
 }
@@ -10,4 +5,3 @@ variable "zone_name" {
 variable "domain_name" {
   type = string
 }
-

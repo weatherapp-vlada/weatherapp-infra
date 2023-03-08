@@ -6,6 +6,10 @@ include {
   path = find_in_parent_folders()
 }
 
+locals {
+  common_vars = read_terragrunt_config(find_in_parent_folders("common.hcl"))
+}
+
 dependency "vpc" {
   config_path = "../vpc"
 }
@@ -22,6 +26,7 @@ dependency "auth" {
   config_path = "../auth"
 }
 
+
 inputs = {
   application_name = "weatherapp"
   vpc_id = dependency.vpc.outputs.vpc_id
@@ -31,7 +36,7 @@ inputs = {
   disk_size = "20"
   certificate_arn = dependency.dns.outputs.certificate_arn
   route53_zone_id = dependency.dns.outputs.zone_id
-  domain_name = "api.inviggde.com"
+  domain_name = "api.${local.common_vars.inputs.domain_name}"
   secrets = "weatherapp-secrets"
   db_host = dependency.rds.outputs.address
   db_port = dependency.rds.outputs.port

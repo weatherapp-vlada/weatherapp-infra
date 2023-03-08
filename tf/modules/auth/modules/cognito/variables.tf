@@ -17,3 +17,7 @@ variable "user_pool_domain" {
 variable "frontend_base_url" {
   type = string
 }
+
+variable "auth_certificate_arn" {
+  type = string
+}

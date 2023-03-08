@@ -20,9 +20,10 @@ resource "aws_cognito_user_pool" "pool" {
     case_sensitive = false
   }
 
-  lambda_config {
-    custom_message = var.custom_message_lambda_arn
-  }
+  # TODO: lambda triggers and lambda permissions
+  # lambda_config {
+  #   custom_message = var.custom_message_lambda_arn
+  # }
 
   schema {
     name                     = "admin"
@@ -78,12 +79,13 @@ resource "aws_cognito_user_pool" "pool" {
 }
 
 resource "aws_cognito_user_pool_domain" "main" {
-  domain       = var.user_pool_domain
-  user_pool_id = aws_cognito_user_pool.pool.id
+  domain          = var.user_pool_domain
+  certificate_arn = var.auth_certificate_arn
+  user_pool_id    = aws_cognito_user_pool.pool.id
 }
 
 resource "aws_cognito_user_pool_client" "confidential" {
-  name = "weatherapp-confidential-client"
+  name = "${var.pool_name}-confidential-client"
   user_pool_id = aws_cognito_user_pool.pool.id
 
   access_token_validity = 60

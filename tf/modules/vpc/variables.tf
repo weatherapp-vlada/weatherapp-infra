@@ -1,8 +1,3 @@
-variable "region" {
-  type = string
-  default = "eu-central-1"
-}
-
 variable "main_cidr_block" {
   description = "Main VPC CIDR"
   type        = string

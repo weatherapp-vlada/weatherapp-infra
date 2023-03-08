@@ -1,6 +1,5 @@
 variable "region" {
   type = string
-  default = "eu-central-1"
 }
 
 variable "pool_name" {
@@ -16,5 +15,9 @@ variable "frontend_base_url" {
 }
 
 variable "user_pool_domain" {
+  type = string
+}
+
+variable "zone_name" {
   type = string
 }
