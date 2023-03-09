@@ -17,3 +17,7 @@ output "lb_arn" {
 output "url" {
   value = "https://${aws_route53_record.myapp.fqdn}"
 }
+
+output "cognito_issuer_uri" {
+  value = local.cognito_issuer_uri
+}

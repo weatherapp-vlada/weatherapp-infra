@@ -2,15 +2,15 @@ variable "application_name" {
   type = string
 }
 
-variable vpc_id {
+variable "vpc_id" {
   type = string
 }
 
-variable ec2_subnets {
+variable "ec2_subnets" {
   type = list(string)
 }
 
-variable elb_subnets {
+variable "elb_subnets" {
   type = list(string)
 }
 
@@ -58,27 +58,11 @@ variable "rds_sg" {
   type = string
 }
 
-variable "cognito_issuer_uri" {
-  type = string
-}
-
 variable "cognito_client_id" {
   type = string
 }
 
-variable "cognito_jwk_uri" {
-  type = string
-}
-
-variable "cognito_confirm_user_base_url" {
-  type = string
-}
-
 variable "user_pool_domain" {
-  type = string
-}
-
-variable "auth_certificate_arn" {
   type = string
 }
 

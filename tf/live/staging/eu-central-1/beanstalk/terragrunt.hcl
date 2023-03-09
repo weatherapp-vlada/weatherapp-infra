@@ -36,11 +36,8 @@ inputs = {
   db_port = dependency.rds.outputs.port
   db_name = dependency.rds.outputs.db_name
   rds_sg = dependency.rds.outputs.sg
-  cognito_issuer_uri = dependency.auth.outputs.cognito_issuer_uri
   cognito_client_id = dependency.auth.outputs.cognito_client_id
-  cognito_jwk_uri = dependency.auth.outputs.cognito_jwk_uri
-  cognito_confirm_user_base_url = dependency.auth.outputs.cognito_confirm_user_base_url
-  user_pool_domain = dependency.auth.outputs.user_pool_domain
-  auth_certificate_arn = dependency.dns.outputs.auth_certificate_arn
   cognito_user_pool_id = dependency.auth.outputs.cognito_user_pool_id
+  user_pool_domain = "auth.${dependency.dns.outputs.domain_name}"
+
 }
