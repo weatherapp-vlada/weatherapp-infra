@@ -2,16 +2,6 @@ resource "aws_elastic_beanstalk_application" "elasticapp" {
   name = var.application_name
 }
 
-module "auth_domain" {
-  source = "../dns"
-  providers = {
-    aws = aws.us_east_1 # auth cert must be in us-east-1
-  }
-
-  zone_name   = var.zone_name
-  domain_name = var.user_pool_domain
-}
-
 resource "aws_elastic_beanstalk_environment" "beanstalkappenv" {
   name                = "${var.application_name}-env"
   application         = aws_elastic_beanstalk_application.elasticapp.name
@@ -413,7 +403,7 @@ resource "aws_elastic_beanstalk_environment" "beanstalkappenv" {
     resource  = ""
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "COGNITO_ISSUER_URI"
-    value     = local.cognito_issuer_uri
+    value     = var.cognito_issuer_uri
   }
 
   setting {
@@ -427,14 +417,14 @@ resource "aws_elastic_beanstalk_environment" "beanstalkappenv" {
     resource  = ""
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "COGNITO_JWK_URI"
-    value     = local.cognito_jwk_uri
+    value     = var.cognito_jwk_uri
   }
 
   setting {
     resource  = ""
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "COGNITO_CONFIRM_USER_BASE_URL"
-    value     = local.cognito_confirm_user_base_url
+    value     = var.cognito_confirm_user_base_url
   }
 }
 
@@ -494,18 +484,12 @@ resource "aws_security_group_rule" "allow_http" {
 
 resource "aws_route53_record" "myapp" {
   zone_id = var.route53_zone_id
-  name    = var.domain_name
+  name    = var.backend_url
   type    = "A"
+
   alias {
     name                   = aws_elastic_beanstalk_environment.beanstalkappenv.cname
     zone_id                = data.aws_elastic_beanstalk_hosted_zone.current.id
     evaluate_target_health = false
   }
-}
-
-resource "aws_cognito_user_pool_domain" "main" {
-  domain          = var.user_pool_domain
-  certificate_arn = module.auth_domain.certificate_arn
-  user_pool_id    = var.cognito_user_pool_id
-  depends_on      = [aws_route53_record.myapp] # A record must exists
 }

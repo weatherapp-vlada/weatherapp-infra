@@ -34,7 +34,7 @@ variable "zone_name" {
   type = string
 }
 
-variable "domain_name" {
+variable "backend_url" {
   type = string
 }
 
@@ -62,10 +62,15 @@ variable "cognito_client_id" {
   type = string
 }
 
-variable "user_pool_domain" {
+variable "cognito_issuer_uri" {
   type = string
 }
 
-variable "cognito_user_pool_id" {
+variable "cognito_jwk_uri" {
   type = string
 }
+
+variable "cognito_confirm_user_base_url" {
+  type = string
+}
+

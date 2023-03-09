@@ -37,7 +37,7 @@ inputs = {
   db_name = dependency.rds.outputs.db_name
   rds_sg = dependency.rds.outputs.sg
   cognito_client_id = dependency.auth.outputs.cognito_client_id
-  cognito_user_pool_id = dependency.auth.outputs.cognito_user_pool_id
-  user_pool_domain = "auth.${dependency.dns.outputs.domain_name}"
-
+  cognito_issuer_uri = "auth.${dependency.dns.outputs.domain_name}" # "https://cognito-idp.${var.region}.amazonaws.com/${aws_cognito_user_pool.pool.id}"
+  cognito_jwk_uri = "auth.${dependency.dns.outputs.domain_name}/.well-known/jwks.json" # https://aws.amazon.com/premiumsupport/knowledge-center/decode-verify-cognito-json-token/
+  cognito_confirm_user_base_url = "auth.${dependency.dns.outputs.domain_name}/confirmUser" # https://stackoverflow.com/questions/47159568/how-to-redirect-after-confirm-amazon-cognito-using-confirmation-url
 }

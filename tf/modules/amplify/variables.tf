@@ -7,7 +7,7 @@ variable "repository_url" {
 }
 
 variable "github_access_token" {
-  type = string
+  type      = string
   sensitive = true
 }
 
@@ -20,7 +20,7 @@ variable "cognito_issuer_uri" {
 }
 
 variable "cognito_client_secret" {
-  type = string
+  type      = string
   sensitive = true
 }
 
@@ -37,5 +37,18 @@ variable "branch_name" {
 }
 
 variable "secrets" {
+  type = string
+}
+
+variable "zone_name" {
+  type = string
+}
+
+variable "user_pool_domain" {
+  type = string
+}
+
+
+variable "cognito_user_pool_id" {
   type = string
 }
