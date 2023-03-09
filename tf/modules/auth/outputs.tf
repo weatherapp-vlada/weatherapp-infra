@@ -22,3 +22,11 @@ output "cognito_jwk_uri" {
 output "cognito_confirm_user_base_url" {
  value = module.cognito.cognito_confirm_user_base_url
 }
+
+output "user_pool_domain" {
+  value = var.user_pool_domain
+}
+
+output "auth_certificate_arn" {
+  value = module.cognito.auth_certificate_arn
+}

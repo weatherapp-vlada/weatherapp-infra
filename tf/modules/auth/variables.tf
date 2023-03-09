@@ -14,10 +14,6 @@ variable "frontend_base_url" {
   type = string
 }
 
-variable "user_pool_domain" {
-  type = string
-}
-
 variable "zone_name" {
   type = string
 }

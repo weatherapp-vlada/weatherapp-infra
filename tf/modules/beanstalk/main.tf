@@ -20,6 +20,16 @@ data "aws_elastic_beanstalk_solution_stack" "docker_latest" {
   name_regex = "^64bit Amazon Linux 2 v(.*) running Docker$"
 }
 
+module auth_domain {
+  source = "../dns"
+  providers = {
+    aws = aws.us_east_1 # auth cert must be in us-east-1
+  }
+
+  zone_name = var.zone_name
+  domain_name = var.user_pool_domain
+}
+
 resource "aws_elastic_beanstalk_environment" "beanstalkappenv" {
   name                ="${var.application_name}-env"
   application         = aws_elastic_beanstalk_application.elasticapp.name
@@ -513,4 +523,11 @@ resource "aws_route53_record" "myapp" {
     zone_id                = data.aws_elastic_beanstalk_hosted_zone.current.id
     evaluate_target_health = false
   }
+}
+
+resource "aws_cognito_user_pool_domain" "main" {
+  domain          = var.user_pool_domain
+  certificate_arn = module.auth_domain.certificate_arn
+  user_pool_id    = var.cognito_user_pool_id
+  depends_on = [aws_elastic_beanstalk_environment.beanstalkappenv] # A record must exists
 }

@@ -22,7 +22,6 @@ dependency "auth" {
   config_path = "../auth"
 }
 
-
 inputs = {
   application_name = "weatherapp"
   vpc_id = dependency.vpc.outputs.vpc_id
@@ -41,4 +40,7 @@ inputs = {
   cognito_client_id = dependency.auth.outputs.cognito_client_id
   cognito_jwk_uri = dependency.auth.outputs.cognito_jwk_uri
   cognito_confirm_user_base_url = dependency.auth.outputs.cognito_confirm_user_base_url
+  user_pool_domain = dependency.auth.outputs.user_pool_domain
+  auth_certificate_arn = dependency.dns.outputs.auth_certificate_arn
+  cognito_user_pool_id = dependency.auth.outputs.cognito_user_pool_id
 }

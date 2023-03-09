@@ -10,14 +10,6 @@ variable "custom_message_lambda_arn" {
   type = string
 }
 
-variable "user_pool_domain" {
-  type = string
-}
-
 variable "frontend_base_url" {
-  type = string
-}
-
-variable "auth_certificate_arn" {
   type = string
 }

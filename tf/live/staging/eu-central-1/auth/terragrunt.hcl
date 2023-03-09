@@ -11,7 +11,7 @@ dependency "dns" {
 }
 
 inputs = {
-  pool_name = "inviggde-pool"
+  pool_name = "weatherapp-pool"
   user_pool_domain = "auth.${dependency.dns.outputs.domain_name}"
   lambda_name = "cognito-confirmation"
 }

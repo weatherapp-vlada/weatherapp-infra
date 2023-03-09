@@ -78,12 +78,6 @@ resource "aws_cognito_user_pool" "pool" {
   }
 }
 
-resource "aws_cognito_user_pool_domain" "main" {
-  domain          = var.user_pool_domain
-  certificate_arn = var.auth_certificate_arn
-  user_pool_id    = aws_cognito_user_pool.pool.id
-}
-
 resource "aws_cognito_user_pool_client" "confidential" {
   name = "${var.pool_name}-confidential-client"
   user_pool_id = aws_cognito_user_pool.pool.id
