@@ -67,8 +67,8 @@ resource "aws_amplify_domain_association" "main" {
   }
 }
 
-module "auth_domain" {
-  source = "../dns"
+module "auth_cert" {
+  source = "../tls"
   providers = {
     aws = aws.us_east_1 # auth cert must be in us-east-1
   }
@@ -79,7 +79,7 @@ module "auth_domain" {
 
 resource "aws_cognito_user_pool_domain" "main" {
   domain          = var.user_pool_domain
-  certificate_arn = module.auth_domain.certificate_arn
+  certificate_arn = module.auth_cert.certificate_arn
   user_pool_id    = var.cognito_user_pool_id
   depends_on      = [aws_amplify_domain_association.main] # A record must exists
 }
