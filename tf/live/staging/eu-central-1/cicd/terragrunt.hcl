@@ -1,13 +1,9 @@
 terraform {
-  source = "../../modules//cicd"
+  source = "../../../../modules//cicd"
 }
 
 include {
   path = find_in_parent_folders()
-}
-
-locals {
-  common_vars = read_terragrunt_config(find_in_parent_folders("common.hcl"))
 }
 
 dependency "beanstalk" {
@@ -21,5 +17,4 @@ inputs = {
   github_connection_arn = "arn:aws:codestar-connections:us-east-2:692885578773:connection/0ee2a05b-c3d3-4a4f-812b-5a67accfeed0"
   beanstalk_app_name = dependency.beanstalk.outputs.app_name
   beanstalk_env_name = dependency.beanstalk.outputs.env_name
-  region = local.common_vars.inputs.region
 }
