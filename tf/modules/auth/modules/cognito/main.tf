@@ -1,6 +1,6 @@
 resource "aws_cognito_user_pool" "pool" {
   name = var.pool_name
-  
+
   auto_verified_attributes = [
     "email"
   ]
@@ -8,6 +8,10 @@ resource "aws_cognito_user_pool" "pool" {
   username_attributes = [
     "email"
   ]
+
+  verification_message_template {
+    default_email_option = "CONFIRM_WITH_LINK"
+  }
 
   account_recovery_setting {
     recovery_mechanism {
@@ -37,7 +41,7 @@ resource "aws_cognito_user_pool" "pool" {
       min_length = "1"
     }
   }
-  
+
   schema {
     name                     = "email"
     attribute_data_type      = "String"
@@ -79,26 +83,27 @@ resource "aws_cognito_user_pool" "pool" {
 }
 
 resource "aws_cognito_user_pool_client" "confidential" {
-  name = "${var.pool_name}-confidential-client"
-  user_pool_id = aws_cognito_user_pool.pool.id
+  name            = "${var.pool_name}-confidential-client"
+  user_pool_id    = aws_cognito_user_pool.pool.id
+  generate_secret = true
 
   access_token_validity = 60
-  allowed_oauth_flows   = [
+  allowed_oauth_flows = [
     "code",
   ]
   allowed_oauth_flows_user_pool_client = true
-  allowed_oauth_scopes                 = [
+  allowed_oauth_scopes = [
     "email",
     "openid",
     "phone",
   ]
   auth_session_validity = 3
-  callback_urls         = [
+  callback_urls = [
     "${var.frontend_base_url}/api/auth/callback/cognito",
   ]
   enable_propagate_additional_user_context_data = false
   enable_token_revocation                       = true
-  explicit_auth_flows                           = [
+  explicit_auth_flows = [
     "ALLOW_ADMIN_USER_PASSWORD_AUTH",
     "ALLOW_CUSTOM_AUTH",
     "ALLOW_REFRESH_TOKEN_AUTH",
@@ -107,7 +112,7 @@ resource "aws_cognito_user_pool_client" "confidential" {
   id_token_validity             = 60
   logout_urls                   = []
   prevent_user_existence_errors = "ENABLED"
-  read_attributes               = [
+  read_attributes = [
     "address",
     "birthdate",
     "custom:admin",
@@ -129,8 +134,8 @@ resource "aws_cognito_user_pool_client" "confidential" {
     "website",
     "zoneinfo",
   ]
-  
-  refresh_token_validity       = 30
+
+  refresh_token_validity = 30
   supported_identity_providers = [
     "COGNITO",
   ]

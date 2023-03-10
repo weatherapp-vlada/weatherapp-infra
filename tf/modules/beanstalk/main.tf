@@ -481,15 +481,3 @@ resource "aws_security_group_rule" "allow_http" {
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = tolist(data.aws_lb.eb_lb.security_groups)[0]
 }
-
-resource "aws_route53_record" "myapp" {
-  zone_id = var.route53_zone_id
-  name    = var.backend_url
-  type    = "A"
-
-  alias {
-    name                   = aws_elastic_beanstalk_environment.beanstalkappenv.cname
-    zone_id                = data.aws_elastic_beanstalk_hosted_zone.current.id
-    evaluate_target_health = false
-  }
-}

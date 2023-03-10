@@ -1,3 +1,8 @@
+data "aws_route53_zone" "public" {
+  name         = var.zone_name
+  private_zone = false
+}
+
 module "auth_cert" {
   source = "../tls"
   providers = {
@@ -5,28 +10,40 @@ module "auth_cert" {
   }
 
   zone_name   = var.zone_name
-  domain_name = var.user_pool_domain
+  domain_name = var.domain_name
+}
+
+resource "aws_amplify_domain_association" "main" {
+  app_id                = var.amplify_app_id
+  domain_name           = var.domain_name
+  wait_for_verification = true
+
+  sub_domain {
+    branch_name = var.amplify_branch_main_branch_name
+    prefix      = ""
+  }
+
+  sub_domain {
+    branch_name = var.amplify_branch_main_branch_name
+    prefix      = "www"
+  }
 }
 
 resource "aws_cognito_user_pool_domain" "main" {
   domain          = var.user_pool_domain
   certificate_arn = module.auth_cert.certificate_arn
   user_pool_id    = var.cognito_user_pool_id
-  depends_on      = [aws_amplify_domain_association.main] # A record must exists
+  depends_on      = [aws_amplify_domain_association.main] # A record must exist
 }
 
-resource "aws_amplify_domain_association" "main" {
-  app_id                = aws_amplify_app.app.id
-  domain_name           = var.domain_name
-  wait_for_verification = true
+resource "aws_route53_record" "myapp" {
+  zone_id = data.aws_route53_zone.public.zone_id
+  name    = var.backend_domain
+  type    = "A"
 
-  sub_domain {
-    branch_name = aws_amplify_branch.main.branch_name
-    prefix      = ""
-  }
-
-  sub_domain {
-    branch_name = aws_amplify_branch.main.branch_name
-    prefix      = "www"
+  alias {
+    name                   = var.beanstalk_cname
+    zone_id                = var.beanstalk_zone_id
+    evaluate_target_health = false
   }
 }

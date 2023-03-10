@@ -17,3 +17,7 @@ variable "frontend_base_url" {
 variable "zone_name" {
   type = string
 }
+
+variable "domain_name" {
+  type = string
+}

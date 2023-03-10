@@ -14,6 +14,10 @@ output "lb_arn" {
   value = aws_elastic_beanstalk_environment.beanstalkappenv.load_balancers[0]
 }
 
-output "url" {
-  value = "https://${aws_route53_record.myapp.fqdn}"
+output "beanstalk_cname" {
+  value = aws_elastic_beanstalk_environment.beanstalkappenv.cname
+}
+
+output "beanstalk_zone_id" {
+  value = data.aws_elastic_beanstalk_hosted_zone.current.id
 }

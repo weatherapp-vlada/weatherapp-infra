@@ -11,7 +11,11 @@ variable "github_access_token" {
   sensitive = true
 }
 
-variable "backend_url" {
+variable "backend_base_url" {
+  type = string
+}
+
+variable "frontend_base_url" {
   type = string
 }
 
@@ -43,11 +47,6 @@ variable "secrets" {
 variable "zone_name" {
   type = string
 }
-
-variable "user_pool_domain" {
-  type = string
-}
-
 
 variable "cognito_user_pool_id" {
   type = string

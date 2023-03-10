@@ -26,15 +26,11 @@ variable "certificate_arn" {
   type = string
 }
 
-variable "route53_zone_id" {
-  type = string
-}
-
 variable "zone_name" {
   type = string
 }
 
-variable "backend_url" {
+variable "backend_domain" {
   type = string
 }
 

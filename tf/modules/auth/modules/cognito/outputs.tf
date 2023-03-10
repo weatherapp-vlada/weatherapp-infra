@@ -7,5 +7,6 @@ output "cognito_client_id" {
 }
 
 output "cognito_client_secret" {
-  value = aws_cognito_user_pool_client.confidential.client_secret
+  value     = aws_cognito_user_pool_client.confidential.client_secret
+  sensitive = true
 }
