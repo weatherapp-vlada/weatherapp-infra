@@ -29,13 +29,6 @@ resource "aws_amplify_domain_association" "main" {
   }
 }
 
-resource "aws_cognito_user_pool_domain" "main" {
-  domain          = var.user_pool_domain
-  certificate_arn = module.auth_cert.certificate_arn
-  user_pool_id    = var.cognito_user_pool_id
-  depends_on      = [aws_amplify_domain_association.main] # A record must exist
-}
-
 resource "aws_route53_record" "myapp" {
   zone_id = data.aws_route53_zone.public.zone_id
   name    = var.backend_domain
@@ -44,6 +37,26 @@ resource "aws_route53_record" "myapp" {
   alias {
     name                   = var.beanstalk_cname
     zone_id                = var.beanstalk_zone_id
+    evaluate_target_health = false
+  }
+}
+
+resource "aws_cognito_user_pool_domain" "main" {
+  domain          = var.user_pool_domain
+  certificate_arn = module.auth_cert.certificate_arn
+  user_pool_id    = var.cognito_user_pool_id
+  depends_on      = [aws_amplify_domain_association.main] # A record must exist
+}
+
+
+resource "aws_route53_record" "auth" {
+  zone_id = data.aws_route53_zone.public.zone_id
+  name    = var.user_pool_domain
+  type    = "A"
+
+  alias {
+    name                   = aws_cognito_user_pool_domain.main.cloudfront_distribution_arn
+    zone_id                = "Z2FDTNDATAQYW2" # This zone_id is fixed
     evaluate_target_health = false
   }
 }
