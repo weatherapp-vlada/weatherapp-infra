@@ -24,10 +24,10 @@ resource "aws_cognito_user_pool" "pool" {
     case_sensitive = false
   }
 
-  # TODO: lambda triggers and lambda permissions
-  # lambda_config {
-  #   custom_message = var.custom_message_lambda_arn
-  # }
+  lambda_config {
+    # custom_message    = var.custom_message_lambda_arn
+    post_confirmation = var.post_confirmation_lambda.arn
+  }
 
   schema {
     name                     = "admin"
@@ -80,6 +80,14 @@ resource "aws_cognito_user_pool" "pool" {
       min_length = "0"
     }
   }
+}
+
+resource "aws_lambda_permission" "post_confirmation" {
+  statement_id  = "AllowExecutionFromCognito"
+  action        = "lambda:InvokeFunction"
+  function_name = var.post_confirmation_lambda.function_name
+  principal     = "cognito-idp.amazonaws.com"
+  source_arn    = aws_cognito_user_pool.pool.arn
 }
 
 resource "aws_cognito_user_pool_client" "confidential" {
